@@ -8,7 +8,7 @@ require('dotenv').config();
 const app = express();
 
 app.set('view engine', 'ejs');
-mongoose.connect("mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB.PASS + "@cluster0.2zug1.mongodb.net/todolistDB?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_PASS + "@cluster0.2zug1.mongodb.net/todolistDB?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true});
 
 const itemSchema = {
     name: String
