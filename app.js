@@ -4,11 +4,11 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const _ = require("lodash")
-
+require('dotenv').config();
 const app = express();
 
 app.set('view engine', 'ejs');
-mongoose.connect("mongodb+srv://rushan:rushan123@cluster0.2zug1.mongodb.net/todolistDB?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB.PASS + "@cluster0.2zug1.mongodb.net/todolistDB?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true});
 
 const itemSchema = {
     name: String
