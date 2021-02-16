@@ -90,9 +90,25 @@ app.post("/delete", (req, res) => {
 	    }
 	});
     }
-	
+
+    else if(listName === "All lists"){
+	// deleting the list clicked
+	var selectedList = req.body.selectedList;
+	console.log(selectedList);
+	List.deleteOne({ name: selectedList }, (err) => {
+	    if (err) {
+		console.log(err);
+	    }
+	    else {
+		console.log("List deleted successfully!")
+		res.redirect("/all");
+	    }
+	});
+    }
+    
+    
     else{
-	//try mentioning the nested document
+	//referring to the nested document
 	List.findOneAndUpdate({name: listName}, {$pull: {items: {_id: checkedItem}}}, (err, docs) => {
 
 	    if(err){
@@ -107,6 +123,36 @@ app.post("/delete", (req, res) => {
 
     } 
 });
+
+
+app.post("/all", (req, res) => {
+
+
+    List.find({}, (err, docs) => {
+	if(err){
+	    console.log(err);
+	}
+	else{
+	    res.render("all", {listTitle: "All lists", newListItems: docs})
+	}
+    });
+
+
+});
+
+
+app.get("/all", (req, res) => {
+    List.find({}, (err, docs) => {
+	if(err){
+	    console.log(err);
+	}
+	else{
+	    res.render("all", {listTitle: "All lists", newListItems: docs})
+	}
+    }); 
+});
+
+
 
 app.get("/about", function(req, res){
   res.render("about");

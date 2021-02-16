@@ -1,0 +1,37 @@
+<%- include("header") -%>
+<div class="box" id="heading">
+    <h1> <%= listTitle %> </h1>
+</div>
+
+<div class="box">
+    <% newListItems.forEach((element) => { %>
+	<form class="deleteform" action="/delete" method="post">
+	<div class="item">
+            <input type="checkbox" name="checkbox" value="<%=element._id%>" onChange="this.form.submit()">
+	    <input type="hidden" name="listTitle" value="<%=listTitle%>"/>
+
+	    <input type="hidden" name="selectedList" value="<%=element.name%>"/>
+
+            <a href="<%="/" + element.name %>"><%= element.name %></a>
+	</div>
+	</form>
+    <% }) %>
+<%//  "localhost:3000/" + element.name%>
+    <!-- <form class="item addform" action="<% "/" + listTitle %>" method="post"> -->
+    <!-- <input type="text" name="newItem" placeholder="New Item" autocomplete="off"> -->
+    <!-- <button class="addbtn" type="submit" name="list">+</button> -->
+    <!-- </form> -->
+</div>
+
+<div class="box buttondiv">
+    <form action="/new" method="post">
+	<input type="hidden" name="listTitle" value="<%= listTitle %>"/>
+	<input type="hidden" name="listItems" value="<%=newListItems%>"/>
+<button type="submit" name="newbtn" class="btn btn-outline-primary newbtn">New List</button>
+    </form>
+    <form action="/all" method="post">
+<button type="submit" name="listbtn" class="btn btn-outline-primary listbtn">List All</button>
+    </form>
+</div>
+
+<%- include("footer") -%>
