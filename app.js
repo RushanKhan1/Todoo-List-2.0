@@ -28,14 +28,16 @@ const item3 = new Item({
     name: "<-- press this button to strike out an item."
 });
 
-
+defaultItemsDocument = [item1, item2, item3];
 
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 var defaultItems = ["Hey there! this is your todo list.", "Press the + button to add new items.", "<-- press this button to strike out an item."]
+
 var items = [];
+
 // creating a list schema
 const listSchema = {
     name: String,
@@ -68,11 +70,14 @@ app.get("/", function(req, res) {
     
 });
 
+
+
 app.post("/delete", (req, res) => {
     var checkedItem = req.body.checkbox;
     var listName = req.body.listTitle;
     listName = _.capitalize(listName);
     checkedItem = checkedItem.toString();
+    console.log(listName);
 
     //deleting the item by id
     if(listName === "Today"){
@@ -106,6 +111,89 @@ app.post("/delete", (req, res) => {
 app.get("/about", function(req, res){
   res.render("about");
 });
+
+
+app.post("/new", (req, res) => {
+
+    var listName = req.body.listTitle;
+    var newList = req.body.newList;
+
+
+    
+    //checking if the button pressed is of adding a new list
+    if(newList){
+	res.redirect("/" + newList);
+    }
+    else if(listName == "All lists" && newList == ""){
+	res.redirect("/all");
+
+    }
+    else if(newList == ""){
+	res.redirect("/" + listName);
+    }
+    else{
+
+    listName = _.capitalize(listName)
+
+
+    if(listName === "Today"){
+	Item.find({}, (err, docs) => {
+	    if(docs.length === 0){
+		//inserting the items if there are no present.
+		Item.insertMany([item1, item2, item3], (err) => {
+		    if(err){
+			console.log(err);
+		    }
+		    else{
+			console.log("Basic items added successfully!");
+			res.redirect("/");
+		    } 
+		});
+	}
+	    else {
+		res.render("new", {listTitle: "Today", newListItems: docs});
+	    }
+	    
+	});
+	
+    }
+	else if(listName === "All lists"){
+	    List.find({}, (err, docs) => {
+		if(err){
+		    console.log(err);
+		}
+		else{
+		    res.render("new", {listTitle: "All lists", newListItems: docs})
+		}
+	    });
+	}
+	else{
+	    List.find({name: listName}, (err, docs) => {
+		if(!err){
+		    // if no list with the name exists.
+		    if(docs.length === 0){
+			const list = new List({
+			    name: listName,
+			    items: item1
+			});
+			list.save();   
+			console.log("No list with that name exists!")  
+			res.redirect("/" + listName);
+		    }
+		    else{
+	    		//console.log("List already exists!")
+			res.render("new", {listTitle: docs[0].name, newListItems: docs[0].items});
+		    }
+		}	
+		else{
+		    console.log(err);
+		} 
+	    });
+	}
+    }
+    
+});
+
 
 
 
@@ -184,6 +272,18 @@ app.post("/", function(req, res){
 });
 
 
+
+// app.get("/work", function(req,res){
+//   res.render("list", {listTitle: "Work List", newListItems: workItems});
+// });
+
+// List.create({ name: 'Today', items: defaultItemsDocument }, function (err) {
+//     if (err){
+// 	console.log(err);
+//     } 
+//     else console.log("default items added successfully!")
+//   // saved!
+// });
 
 // app.get("/work", function(req,res){
 //   res.render("list", {listTitle: "Work List", newListItems: workItems});

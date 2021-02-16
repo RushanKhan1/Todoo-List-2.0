@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>To Do List</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/new.css">
+
+</head>
+
+<body>
+
+<div class="box" id="heading">
+    <h1> <%= listTitle %> </h1>
+</div>
+
+<div class="box">
+    <% newListItems.forEach((element) => { %>
+	<form class="deleteform" action="/delete" method="post">
+	<div class="item">
+            <input type="checkbox" name="checkbox" value="<%=element._id%>" onChange="this.form.submit()">
+	    <input type="hidden" name="listTitle" value="<%=listTitle%>"/>
+            <p><%= element.name %></p>
+	</div>
+	</form>
+    <% }) %>
+
+    <form class="item addform" action="<% "/" + listTitle %>" method="post">
+        <input type="text" name="newItem" placeholder="New Item" autocomplete="off">
+        <button class="addbtn" type="submit" name="list">+</button>
+    </form>
+</div>
+
+<div class="box buttondiv">
+    <form action="/new" method="post">
+	<input type="hidden" name="listTitle" value="<%=listTitle%>"/>
+	<input type="hidden" name="listItems" value="<%=newListItems%>"/>
+	<button type="submit" name="newbtn" class="btn btn-outline-primary newbtn">New List</button>
+    </form>
+    <form action="/all" method="get">
+<button type="submit" name="listbtn" class="btn btn-outline-primary listbtn">List All</button>
+    </form>
+</div>
+
+<div id="newListFormDiv">
+<form id="newListForm" action="/new" method="post">
+    <input type="hidden" name="listTitle" value="<%=listTitle%>"/>
+    <input type="hidden" name="listItems" value="<%=newListItems%>"/>
+    <input type="text" name="newList" placeholder="New List" autocomplete="off">
+    <button class="addbtn" type="submit" name="list">+</button>
+</form>
+</div>
+    
+
+<%- include("footer") -%>
