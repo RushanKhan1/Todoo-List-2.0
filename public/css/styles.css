@@ -1,13 +1,24 @@
-html {
-  background-color: #252A34;
-  background-image: -webkit-linear-gradient(65deg, #08D9D6 50%, #252A34 50%);
-  min-height: 1000px;
-  font-family: 'helvetica neue';
+/* html { */
+/*   background-color: #252A34; */
+/*   background-image: -webkit-linear-gradient(65deg, #08D9D6 50%, #252A34 50%); */
+/*   min-height: 1000px; */
+/*   font-family: 'helvetica neue'; */
+/* } */
+
+
+body {
+    background-color: #252a34;
+    background-image: -webkit-linear-gradient(65deg, #08d9d6 50%, #252a34 50%);
+    min-height: 1000px;
+    font-family: 'helvetica neue';
+    
 }
+
 
 h1 {
   color: #fff;
   padding: 10px;
+  font-weight: bold;
 }
 
 .box {
@@ -51,21 +62,79 @@ p {
   color: #00204a;
 }
 
-form {
-  text-align: center;
-  margin-left: 20px;
+form { /* forms have a default display property of block */
+    display: inline;
 }
 
-button {
+
+.addform .deleteform {
+    text-align: center;
+    margin-left: 20px;
+}
+
+
+.addbtn {
   min-height: 50px;
   width: 50px;
   border-radius: 50%;
   border-color: transparent;
-  background-color: #08D9D6;
+  background-color: #08d9d6;
   color: #fff;
   font-size: 30px;
   padding-bottom: 6px;
   border-width: 0;
+}
+
+.newbtn {
+    min-width: 198px;
+    color: black;
+    /* min-height: 30px; */
+    /* font-weight: normal; */
+    /* color: white; */
+    /* padding: 10px; */
+    /* border-color: black; */
+    /* max-width: 400px; */
+    position: relative;
+    top: -50px;
+    max-width: 400px;
+    margin: 50px auto;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+}
+
+.listbtn {
+    min-width: 198px;
+    color: black;
+    /* min-height: 30px; */
+    /* font-weight: normal; */
+    /* color: white; */
+    /* padding: 10px; */
+    /* border-color: black; */
+    /* max-width: 400px; */
+    /* top: -136.5px; */
+    position: relative;
+    top: -50px;
+    left: 5px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+
+}
+
+.newbtn:hover {
+    background-color: #252a34;
+    
+}
+
+.listbtn:hover {
+    background-color: #252a34;
+    
+}
+
+.buttondiv {
+    background: transparent;
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0);
 }
 
 input[type="text"] {
